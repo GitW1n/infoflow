@@ -197,14 +197,14 @@ async def fetch_cointelegraph_news():
                         continue
                     link = f"https://cointelegraph.com{href}"
 
-                    # Получение полного текста новости
+                    
                     full_text = await fetch_full_news_text(session, link)
 
                     news_list.append({
                         "title": title,
                         "link": link,
-                        "description": "",  # Cointelegraph может не предоставлять описание на главной странице
-                        "time": "",         # Время можно извлечь из самой статьи при необходимости
+                        "description": "",  
+                        "time": "",         
                         "full_text": full_text
                     })
 
