@@ -23,20 +23,19 @@ news_url = "https://www.bbc.com/russian"
 current_time = datetime.datetime.now()
 
 def get_weather(city):
-    # Формируем URL для запроса
     url = f'https://yandex.com/weather/en/{city}'
     
-    # Отправляем GET запрос
+    
     response = requests.get(url)
     
     if response.status_code != 200:
         print("Ошибка при получении данных!")
         return
     
-    # Парсим HTML
+    
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Извлекаем температуру
+    
     temp = soup.find('p', class_='AppFactTemperature_wrap__z_f_O')
     if temp:
         temperature = temp.find('span', class_='AppFactTemperature_value__2qhsG').text
@@ -79,19 +78,19 @@ weather_info = get_weather(city)
 
 url = "https://api.coingecko.com/api/v3/simple/price"
 
-# Список криптовалют
+
 coins = ['bitcoin', 'solana', 'ethereum', 'binancecoin', 'litecoin', 'ripple']
 
-# Параметры запроса
+
 params = {
     'ids': ','.join(coins),
     'vs_currencies': 'usd'
 }
 
-# Запрос данных
+
 response = requests.get(url, params=params)
 
-# Проверка успешности запроса
+
 if response.status_code == 200:
     data = response.json()
     crypto_res = "\n".join([f"{coin.capitalize()}: ${data[coin]['usd']}" for coin in coins]) #результат сбора цен
@@ -186,7 +185,7 @@ async def fetch_cointelegraph_news():
                 html = await response.text()
                 soup = BeautifulSoup(html, 'html.parser')
                 
-                # Поиск блоков с новостями
+                
                 articles = soup.select('a[href^="/news/"]')
                 news_list = []
 
@@ -209,7 +208,7 @@ async def fetch_cointelegraph_news():
                     })
 
                     if len(news_list) >= 10:
-                        break  # Ограничение количества новостей
+                        break
 
                 return news_list if news_list else "Новости не найдены"
         except Exception as e:
@@ -242,13 +241,12 @@ async def generate_summary(news_items):
     api_url = "http://localhost:11434/api/generate"
     headers = {"Content-Type": "application/json"}
 
-    # Собираем все новости в один форматированный блок
     formatted_news = "\n\n".join(
         f"Заголовок: {n['title']}\nВремя: {n['time']}\nОписание: {n['description']}\nТекст: {n['full_text']}"
         for n in news_items
     )
 
-    # Создаём единый prompt
+
     prompt_text = f"""Привет, без лишнего в своем сообщении сначала:
 1. Поприветствуй пользователя с именем Яков Абрамов.
 2. Укажи текущую дату(только в формате DD.MM.YY  и время HH:MM:SS):{current_time}
