@@ -14,14 +14,8 @@ InfoFlow is an asynchronous Python-based news and data aggregation bot that fetc
 - Sends the result to WhatsApp using `pywhatkit`
 - Formats summary according to strict structure and style rules
 
-## Tech Stack
+## Features
 
-- Python 3
-- aiohttp
-- requests
-- beautifulsoup4
-- pywhatkit
-- Local LLM API
 - CoinGecko API for crypto prices
 - Weather scraping
-
+- News summarizing
