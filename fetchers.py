@@ -56,4 +56,15 @@ async def fetch_reuters_news():
 
 async def fetch_cointelegraph_news():
     url = "https://cointelegraph.com"
-    
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            if response.status != 200:
+                return []
+            soup = BeautifulSoup(await response.text(), 'html.parser')
+            articles = soup.select('a[href^="/news/"]')
+            news_list = []
+            for article in articles[:10]:
+                link = f"https://cointelegraph.com{article.get('href')}"
+                full_news = await fetch_full_news_text(session, link)
+                news_list.append({"title": article.get_text(strip=True), "link": link, "full_text": full_news})
+            return news_list
