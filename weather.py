@@ -22,4 +22,9 @@ def parse_weather(html: str) -> dict:
         'humidity': humidity
     }
 
-
+def get_weather(city: str):
+    url = f'https://yandex.com/weather/en/{city}'
+    response = requests.get(url)
+    if response.status_code != 200:
+        return None
+    return parse_weather(response.text)
