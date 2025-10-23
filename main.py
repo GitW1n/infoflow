@@ -275,7 +275,7 @@ async def periodic_news_check():
         if all_news:
             summary = await generate_summary(all_news)
             if isinstance(summary, str):
-                pywhatkit.sendwhatmsg_instantly("+79037530394", summary)
+                pywhatkit.sendwhatmsg_instantly("", summary)
                 print(summary)
             else:
                 print("Summary is not a string, message not sent.")
